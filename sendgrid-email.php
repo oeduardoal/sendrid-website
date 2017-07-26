@@ -9,29 +9,30 @@
     header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 
 
-    // $enviaPara = $_POST['send'];
-    // $nome = $_POST['Nome'];
-    // $email = $_POST['Email'];
-    // $telefone = $_POST['Telefone'];
-    // $assunto = "VIA SITE: " . $_POST['Assunto'];
-    // $domain = preg_replace('/^www\./', '', trim($_POST['domain']));;
-    // $mensagem = $_POST['Inf_gerais'];
+    // get Data Post
+    $enviaPara = $_POST['send'];
+    $nome = $_POST['Nome'];
+    $email = $_POST['Email'];
+    $telefone = $_POST['Telefone'];
+    $assunto = "VIA SITE: " . $_POST['Assunto'];
+    $domain = preg_replace('/^www\./', '', trim($_POST['domain']));;
+    $mensagem = $_POST['Inf_gerais'];
 
+    $content_html .= "Olá! <strong>".$nome."</strong> enviou uma mensagem.";
+    $content_html .= "<br /><br /><strong>Nome Completo:</strong> ".$nome."<br>";
+    $content_html .= "<strong>Email:</strong> ".$email."<br>";
+    $content_html .= "<strong>Telefone:</strong> ".$telefone."<br>";
+    $content_html .= "<strong>Assunto:</strong> ".$assunto."<br>";
+    $content_html .= "<strong>Mensagem:</strong> ".$mensagem."<br>";
 
-    // $envia .= "Olá! <strong>".$nome."</strong> enviou uma mensagem.";
-    // $envia .= "<br /><br /><strong>Nome Completo:</strong> ".$nome."<br>";
-    // $envia .= "<strong>Email:</strong> ".$email."<br>";
-    // $envia .= "<strong>Telefone:</strong> ".$telefone."<br>";
-    // $envia .= "<strong>Assunto:</strong> ".$assunto."<br>";
-    // $envia .= "<strong>Mensagem:</strong> ".$mensagem."<br>";
-    // if ($domain) {
-    //     $envia .= "<br><br><small>Mensagem enviada de: </small>" . $domain;
-    // }
+    if ($domain) {
+        $content_html .= "<br><br><small>Mensagem enviada de: </small>" . $domain;
+    }
 
     $from = new SendGrid\Email("Eduardo Almeida", "eduardoalmeida258@gmail.com");
-    $subject = "Assunto";
-    $to = new SendGrid\Email("Eduardo Almeida 2", "oeduardoal@gmail.com");
-    $content = new SendGrid\Content("text/html", "asdasddaaddasdsadsa <hr/>");
+    $subject = $assunto;
+    $to = new SendGrid\Email($nome, $enviaPara);
+    $content = new SendGrid\Content("text/html", $content_html);
     $mail = new SendGrid\Mail($from, $subject, $to, $content);
 
     $apiKey = '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';
