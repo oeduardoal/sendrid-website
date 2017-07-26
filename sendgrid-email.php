@@ -15,26 +15,26 @@
         
         private $apiKey;
 
-        function __construct($apiKey){
+        public function __construct($apiKey){
             $this->apiKey = $apiKey;
         }
         
-        function sendFor($emailFor){
+        public function sendFor($emailFor){
             $this->emailFor = $emailFor;
         }
 
-        function sendFields($name, $email, $subject, $content){
+        public function sendFields($name, $email, $subject, $content){
             $this->name = $name;
             $this->email = $email;
             $this->subject = $subject;
             $this->content = $content;
         }
 
-        function send(){
+        public function send(){
 
-            $from = new SendGrid\Email("CONTATO", "contato");
+            $from = new SendGrid\Email("Eduardo Almeida", "oeduardoal@gmail.com");
 
-            $to = new SendGrid\Email($this->name, $this->sendFor);
+            $to = new SendGrid\Email($this->name, $this->emailFor);
 
             $content = new SendGrid\Content("text/html", $this->content);
 
