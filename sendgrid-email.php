@@ -29,16 +29,32 @@
         $content_html .= "<br><br><small>Mensagem enviada de: </small>" . $domain;
     }
 
-    $from = new SendGrid\Email("Eduardo Almeida", "eduardoalmeida258@gmail.com");
+    // Configurando Dados
+    $from = new SendGrid\Email("CONTATO", "contato");
     $subject = $assunto;
     $to = new SendGrid\Email($nome, $enviaPara);
     $content = new SendGrid\Content("text/html", $content_html);
     $mail = new SendGrid\Mail($from, $subject, $to, $content);
 
+    // Secret KEY
     $apiKey = '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';
+
     $sg = new \SendGrid($apiKey);
 
+    $mail = new SendGrid\Mail($from, $subject, $to, $content);
+    
     $response = $sg->client->mail()->send()->post($mail);
-    echo $response->statusCode();
-    print_r($response->headers());
-    echo $response->body();
+
+    if($response->statusCode() != 202){
+         $return = array(
+            'success' => false,
+            'status' => $response->statusCode()
+        );
+        echo json_encode($return);
+    }else{
+        $return = array(
+            'success' => true,
+            'status' => $response->statusCode()
+        );
+        echo json_encode($return);
+    }
