@@ -1,0 +1,16 @@
+{
+    "name": "eduardo/sendgrid-email",
+    "description": "Formulario Sendgrid",
+    "type": "project",
+    "require": {
+        "sendgrid/sendgrid": "^6.0"
+    },
+    "license": "MIT License",
+    "authors": [
+        {
+            "name": "Eduardo Almeida",
+            "email": "eduardoalmeida258@gmail.com"
+        }
+    ],
+    "minimum-stability": "beta"
+}
