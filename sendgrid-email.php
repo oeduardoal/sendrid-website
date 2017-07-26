@@ -32,12 +32,23 @@
     $subject = "Assunto";
     $to = new SendGrid\Email("Eduardo Almeida 2", "oeduardoal@gmail.com");
     $content = new SendGrid\Content("text/html", "asdasddaaddasdsadsa <hr/>");
-    $mail = new SendGrid\Mail($from, $subject, $to, $content);
 
     $apiKey = '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';
-    $sg = new \SendGrid($apiKey);
 
+    $sg = new \SendGrid($apiKey);
+    $mail = new SendGrid\Mail($from, $subject, $to, $content);
     $response = $sg->client->mail()->send()->post($mail);
-    echo $response->statusCode();
-    print_r($response->headers());
-    echo $response->body();
+
+    if($response->statusCode() != 202){
+         $return = array(
+            'success' => false,
+            'status' => $response->statusCode()
+        );
+        echo json_encode($return);
+    }else{
+        $return = array(
+            'success' => true,
+            'status' => $response->statusCode()
+        );
+        echo json_encode($return);
+    }
